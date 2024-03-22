@@ -14,7 +14,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import type { Post } from '~/types';
+import type { PostWithUser } from '~/types';
 
 const props = defineProps({
   order: {
@@ -56,8 +56,9 @@ const fetchPosts = async () => {
     query: {
       limit: 20,
       offset: offset.value,
+      include: 'user',
       order: sort.value ? 'newestFirst' : 'oldestFirst',
-      select: 'id,title,excerpt,image,publishedAt',
+      select: 'id,title,excerpt,image,publishedAt,user.firstName,user.lastName,user.avatar,user.email',
     }
   });
 
@@ -65,7 +66,7 @@ const fetchPosts = async () => {
   loading.value = false;
 }
 
-const allPosts = ref<Post[]>([]);
+const allPosts = ref<PostWithUser[]>([]);
 
 await fetchPosts();
 </script>
