@@ -4,7 +4,7 @@ export default defineNuxtConfig({
   experimental: {
     componentIslands: true,
   },
-  modules: ["@nuxtjs/tailwindcss"],
+  modules: ["@nuxtjs/tailwindcss", "@nuxt/image", "nuxt-lazy-hydrate"],
   nitro: {
     experimental: {
       database: true,
