@@ -9,9 +9,7 @@
   </div>
 </template>
 <script setup lang="ts">
-import { ref } from 'vue';
 import { z } from 'zod';
-const PostList = defineAsyncComponent(() => import("~/components/PostList.vue"));
 
 const route = useRoute();
 

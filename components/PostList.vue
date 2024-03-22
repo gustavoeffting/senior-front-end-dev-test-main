@@ -7,11 +7,13 @@
     <div v-for="post in allPosts" class="flex-2 lg:w-1/2 p-4">
       <PostItem :post="post" :key="post.id" />
     </div>
+    <div v-if="loading" class="flex justify-center items-center w-full h-20 pb-20 mt-10">
+      <NuxtImg class="animate-spin mr-3" loading="lazy" width="100" height="100"
+        src="../public/loading-removebg-preview.png" alt="Loading" />
+    </div>
   </div>
 </template>
 <script setup lang="ts">
-import { boolean } from 'drizzle-orm/mysql-core';
-import { ref } from 'vue';
 import type { Post } from '~/types';
 
 const props = defineProps({
@@ -23,26 +25,47 @@ const props = defineProps({
 });
 
 const sort = ref(props.order);
+const offset = ref(0);
+const loading = ref(false);
+
+onMounted(() => {
+  window.addEventListener("scroll", handleScroll);
+})
+
+onBeforeUnmount(() => {
+  window.removeEventListener("scroll", handleScroll);
+})
 
 watch(() => sort.value, async () => {
+  offset.value = 0;
+  allPosts.value = [];
   await fetchPosts();
 });
 
+const handleScroll = async () => {
+  const bottomOfWindow = Math.max(window.scrollY, document.documentElement.scrollTop, document.body.scrollTop) + window.innerHeight === document.documentElement.scrollHeight
+  if (bottomOfWindow) {
+    offset.value += 20;
+    await fetchPosts();
+  }
+}
+
 const fetchPosts = async () => {
+  loading.value = true;
   const { data: posts } = await useFetch("/api/posts", {
     query: {
       limit: 20,
-      offset: 0,
+      offset: offset.value,
       order: sort.value ? 'newestFirst' : 'oldestFirst',
+      select: 'id,title,excerpt,image,publishedAt',
     }
   });
 
-  allPosts.value = JSON.parse(JSON.stringify(posts.value)) as Post[]; // TODO: use ZOD to validate data and avoid type assertion // is it necessary?
+  allPosts.value = [...allPosts.value, ...JSON.parse(JSON.stringify(posts.value))];
+  loading.value = false;
 }
 
 const allPosts = ref<Post[]>([]);
 
 await fetchPosts();
-
-const PostItem = defineAsyncComponent(() => import("~/components/PostItem.vue"));
 </script>
