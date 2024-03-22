@@ -4,23 +4,30 @@
       <h1 class="text-xl">Our blog!</h1>
       <p class="mt-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, esse hic aut error blanditiis
         explicabo.</p>
-      <div class="flex flex-col flex-wrap lg:flex-row mt-3">
-        <div v-for="post in allPosts" class="flex-2 lg:w-1/2 p-4">
-          <PostItem :post="post" :key="post.id" />
-        </div>
-      </div>
+      <PostList :order="sort" />
     </div>
   </div>
 </template>
 <script setup lang="ts">
-import type { Post } from '~/types';
-const PostItem = defineAsyncComponent(() => import("~/components/PostItem.vue"));
-const { data: posts } = await useFetch("/api/posts", {
-  query: {
-    limit: 20,
-    offset: 0,
-    order: 'oldestFirst',
+import { ref } from 'vue';
+import { z } from 'zod';
+const PostList = defineAsyncComponent(() => import("~/components/PostList.vue"));
+
+const route = useRoute();
+
+const querySchema = z.object({
+  q: z.string().optional(),
+  order: z.string().optional().default('newestFirst'),
+})
+
+const validQuery = computed(() => {
+  try {
+    return querySchema.parse(route.query);
+  } catch (error) {
+    alert('Invalid query parameters');
+    return null;
   }
 });
-const allPosts = JSON.parse(JSON.stringify(posts.value)) as Post[]; // TODO: use ZOD to validate data and avoid type assertion
+
+const sort = ref(validQuery.value?.order === "oldestFirst" ? true : false);
 </script>
