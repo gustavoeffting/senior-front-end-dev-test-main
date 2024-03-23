@@ -54,4 +54,16 @@ const fetchPost = async () => {
 }
 
 await fetchPost();
+
+useServerSeoMeta({
+  title: post.value?.title,
+  description: post.value?.excerpt,
+  ogTitle: post.value?.title,
+  ogDescription: post.value?.excerpt,
+  ogImage: post.value?.image,
+  ogUrl: route.fullPath,
+  twitterCard: 'summary_large_image',
+  twitterTitle: post.value?.title,
+  twitterDescription: post.value?.excerpt,
+});
 </script>
