@@ -27,5 +27,8 @@ export default defineNuxtConfig({
     "/": {
       ssr: false,
     },
+    "/posts": {
+      prerender: true,
+    }
   },
 });
