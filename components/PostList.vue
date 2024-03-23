@@ -53,18 +53,23 @@ const handleScroll = async () => {
 
 const fetchPosts = async () => {
   loading.value = true;
-  const { data: posts } = await useFetch(API_URL, {
-    query: {
-      limit: 20,
-      offset: offset.value,
-      include: 'user',
-      order: sort.value ? 'newestFirst' : 'oldestFirst',
-      select: 'id,title,excerpt,image,publishedAt,user.firstName,user.lastName,user.avatar,user.email',
-    }
-  });
+  try {
+    const { data: posts } = await useFetch(API_URL, {
+      query: {
+        limit: 20,
+        offset: offset.value,
+        include: 'user',
+        order: sort.value ? 'newestFirst' : 'oldestFirst',
+        select: 'id,title,excerpt,image,publishedAt,user.firstName,user.lastName,user.avatar,user.email',
+      }
+    });
 
-  allPosts.value = [...allPosts.value, ...JSON.parse(JSON.stringify(posts.value))];
-  loading.value = false;
+    allPosts.value = [...allPosts.value, ...JSON.parse(JSON.stringify(posts.value))];
+    loading.value = false;
+  } catch (error) {
+    console.error(error);
+    await navigateTo('/404');
+  }
 }
 
 const allPosts = ref<PostWithUser[]>([]);
