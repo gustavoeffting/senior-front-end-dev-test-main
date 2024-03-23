@@ -4,7 +4,7 @@
       src="../public/loading-removebg-preview.png" alt="Loading" />
   </div>
   <div class="flex justify-center bg-black">
-    <NuxtImg :src="post?.image" :alt="post?.title" />
+    <NuxtImg class="lg:max-w-screen-lg" :src="post?.image" :alt="post?.title" />
   </div>
   <div class="h-screen flex justify-center m-auto">
     <div class="text-left p-5 max-w-3xl">
