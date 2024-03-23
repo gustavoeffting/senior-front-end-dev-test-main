@@ -16,7 +16,7 @@
     formatTimestamp(post.publishedAt) : '' }}</span>
         </div>
       </div>
-      <div class="my-10" v-html="post?.content"></div>
+      <div class="my-5 pb-10" v-html="post?.content"></div>
     </div>
   </div>
 </template>
