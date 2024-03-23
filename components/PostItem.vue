@@ -21,7 +21,7 @@
 </template>
 <script setup lang="ts">
 import type { PostWithUser } from '~/types';
-import { formatTimestamp } from '~/helpers';
+import { formatTimestamp } from '~/utilities/helpers';
 
 const props = defineProps({
   post: {

@@ -4,7 +4,7 @@
     <input type="checkbox" id="sort" v-model="sort">
   </div>
   <div class="flex flex-col flex-wrap lg:flex-row mt-3">
-    <div v-for="post in allPosts" class="flex-2 lg:w-1/2 p-4">
+    <div v-for="post in allPosts" class="flex-2 lg:w-1/2 mt-4 md:px-4">
       <PostItem :post="post" :key="post.id" />
     </div>
     <div v-if="loading" class="flex justify-center items-center w-full h-20 pb-20 mt-10">
@@ -15,6 +15,7 @@
 </template>
 <script setup lang="ts">
 import type { PostWithUser } from '~/types';
+import { API_URL } from '~/utilities/consts';
 
 const props = defineProps({
   order: {
@@ -52,7 +53,7 @@ const handleScroll = async () => {
 
 const fetchPosts = async () => {
   loading.value = true;
-  const { data: posts } = await useFetch("/api/posts", {
+  const { data: posts } = await useFetch(API_URL, {
     query: {
       limit: 20,
       offset: offset.value,

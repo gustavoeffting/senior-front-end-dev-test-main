@@ -1,6 +1,6 @@
 <template>
-  <div class="h-screen flex justify-center p-10 m-auto">
-    <div class="text-center mx-auto max-w-screen-xl">
+  <div class="h-screen flex justify-center p-5 m-auto">
+    <div class="text-center mx-auto max-w-screen-xl mt-5">
       <h1 class="text-xl">Our blog!</h1>
       <p class="mt-5">Lorem ipsum dolor sit amet consectetur adipisicing elit. Ab, esse hic aut error blanditiis
         explicabo.</p>
