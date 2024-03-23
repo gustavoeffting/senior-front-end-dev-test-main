@@ -1,9 +1,9 @@
 <template>
-  <div class="bg-white shadow-lg p-4 text-left">
+  <div class="bg-white shadow-lg rounded p-4 text-left">
     <NuxtLazyHydrate :on-interaction="['click', 'touchstart']">
       <NuxtLink :to="`/posts/${props.post.id}`">
         <h2 class="text-xl font-bold mb-3">{{ props.post.title }}</h2>
-        <NuxtImg :src="props.post.image" :alt="props.post.title" />
+        <NuxtImg class="rounded" :src="props.post.image" :alt="props.post.title" />
         <p class="mt-3">{{ props.post.excerpt }}</p>
         <div class="flex justify-between mt-3 text-gray-500 items-center text-sm flex-wrap">
           <div class="flex items-center">
