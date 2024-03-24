@@ -27,5 +27,5 @@ const validQuery = computed(() => {
   }
 });
 
-const sort = ref(validQuery.value?.order === "oldestFirst" ? true : false);
+const sort = ref(validQuery.value?.order === "oldestFirst");
 </script>
