@@ -1,5 +1,5 @@
 <template>
-  <div class="mt-5 flex justify-end px-5">
+  <div class="mt-5 flex justify-end px-5 items-center">
     <label for="sort" class="mr-2">Oldest to newest</label>
     <input type="checkbox" id="sort" v-model="sort">
   </div>
