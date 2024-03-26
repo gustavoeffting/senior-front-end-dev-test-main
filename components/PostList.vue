@@ -56,7 +56,7 @@ const fetchPosts = async () => {
   try {
     const { data: posts } = await useFetch(API_URL, {
       query: {
-        limit: 20,
+        limit: 10,
         offset: offset.value,
         include: 'user',
         order: sort.value ? 'newestFirst' : 'oldestFirst',
